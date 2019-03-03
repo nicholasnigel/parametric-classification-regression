@@ -37,7 +37,7 @@ train,test =  train_test_split(data, test_size = 0.2, shuffle = False)
 # ----------------------------------------  CALCULATING PRIOR PROBABILITY   --------------------------------------------
 
 prior = train['class'].value_counts()    #       finding the value counts for each class
-prior_prob = prior/input_num     #       Normalize by number of datas, contains prob[1] and prob[2]
+prior_prob = prior/len(train)     #       Normalize by number of datas, contains prob[1] and prob[2]
 
 # ----------------------------------------  Details  ------------------------------------------------------------
 print(prior_prob)
