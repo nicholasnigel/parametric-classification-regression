@@ -1,0 +1,55 @@
+PART 3, DATA DETAILS
+Prior Probabilities of Each Class:
+1    0.307500
+3    0.297500
+2    0.198281
+4    0.196719
+Name: class, dtype: float64
+
+Mean Table:
+1    0.488814
+2    1.488326
+3    2.563470
+4    3.373043
+dtype: float64
+
+Variance Table:
+1     1.006840
+2     4.170953
+3     9.172632
+4    16.021616
+dtype: float64
+
+Confusion Matrix:
+     1  2    3   4
+1  419  0   38   0
+2  187  0  140   0
+3  168  0  270  43
+4   86  0  192  57
+
+Recall:
+1    0.916849
+2    0.000000
+3    0.561331
+4    0.170149
+dtype: float64
+
+Precision:
+1    0.487209
+2         NaN
+3    0.421875
+4    0.570000
+dtype: float64
+
+Accuracy:
+0.46625
+
+f1 scores:
+1    0.636295
+2         NaN
+3    0.481713
+4    0.262069
+dtype: float64
+
+Average f1 score: 0.4600254436481461
+
