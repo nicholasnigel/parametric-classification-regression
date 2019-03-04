@@ -1,0 +1,21 @@
+prior prob 1 = 0.701875
+prior prob 2 = 0.298125
+average of class 1 = 0.5473602303669292
+average of class 2 = 1.1304874928941913
+Variance of class 1 = 0.9690177338050349
+Variance of class 2 = 4.080569531183328
+Confusion Matrix:
+     1   2
+1  268  12
+2   73  47
+Recall:
+1    0.957143
+2    0.391667
+dtype: float64
+Precision:
+1    0.785924
+2    0.796610
+dtype: float64
+Accuracy:
+0.7875
+Average f1 score: 0.6941318291816228
