@@ -1,0 +1,4 @@
+Prior Probability:
+1    0.585
+2    0.415
+Name: class, dtype: float64
