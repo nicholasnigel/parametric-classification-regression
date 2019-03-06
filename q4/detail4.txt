@@ -1,0 +1,42 @@
+PART 3, DATA DETAILS
+Prior Probabilities of Each Class:
+2    0.5575
+1    0.4425
+Name: class, dtype: float64
+
+Estimate Bernoulli p(i): 
+p for class 1: 0.7556497175141242
+p for class 2: 0.46449925261584457
+
+Mean of feature 2 for each class:
+Class 1 mean: 0.4772029984234261
+Class 2 mean: 1.508412605821115
+
+Variance of feature 2 of each class:
+Class 1 variance: 0.2309572277613295
+Class 2 variance: 3.7916636509905155
+Confusion Matrix:
+     1    2
+1  456   74
+2  155  515
+
+Recall:
+1    0.860377
+2    0.768657
+dtype: float64
+
+Precision:
+1    0.746318
+2    0.874363
+dtype: float64
+
+Accuracy:
+0.8091666666666667
+
+f1 scores:
+1    0.799299
+2    0.818110
+dtype: float64
+
+Average f1 score: 0.8087042357253891
+
