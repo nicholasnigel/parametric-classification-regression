@@ -66,13 +66,51 @@ def posterior():
 # Main Function:
 # ============================================
 
+def split_data(data, training_size):
+    """
+    Splitting data into training and testing depending on training size
+    
+    Parameters
+    ----------
+        > data: The data/pandas dataframe you want to pass along
+        > training_size: the proportion of data that is in training
+    """
+    num_training = int(training_size * len(data))
+    num_test = len(data) - num_training
+    train = data.head(num_training)
+    test = data.tail(num_test)
+    return train,test
+
+def confusion_mat():
+    """
+    Creating confusion matrix that is useful for evaluation matrix
+
+    Parameters
+    ----------
+        > actual: The list of actual classes
+        > prediction: The list of predicted classes
+    """
+    classes = data['class'].unique()
+    classes.sort()
+
+    arr  = [[0 for i in range(len(classes))] for i in range(len(classes))]
+    arr = np.array(arr)
+
+    con_mat = pd.DataFrame(arr, index=classes, columns = classes)
+
+
+    for i in classes:
+        for j in classes:
+            #con_mat.iloc[i][j] = test[ (test['class']==j ) & ( test['prediction'] == i) ]
+            con_mat.loc[i,j] = len(test[ (test['class'] == i ) & ( test['prediction']==j ) ])
+    return con_mat
 
 
 # ================================  Data Input and Splitting    ========================================
 f = open('detail4.txt', 'w')
 f.write('PART 3, DATA DETAILS\n')
 data = pd.read_csv('input_4.csv')
-train,test =  train_test_split(data, test_size = 0.2, shuffle = False)      #       splitting into training and data (80% and 20%)
+train,test =  split_data(data,0.8)      #       splitting into training and data (80% and 20%)
 
 # ================================  Calculating Prior Probability ========================================
 prior = train['class'].value_counts()
@@ -118,9 +156,9 @@ posterior()
 
 labels = [1,2]
 
-conf_matrix = confusion_matrix(test['class'], test['prediction'],labels=labels)
+#conf_matrix = confusion_matrix(test['class'], test['prediction'],labels=labels)
 
-cm = pd.DataFrame(conf_matrix, index=labels, columns=labels)
+cm = confusion_mat()
 f.write('Confusion Matrix:\n'+str(cm)+'\n\n')
 
 recall = np.diag(cm) / np.sum(cm, axis = 1)

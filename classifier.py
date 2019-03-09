@@ -1,85 +1,88 @@
 import pandas as pd 
 import numpy as np
 from math import pow
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import confusion_matrix
 
 class Classifier:
+    """Classifier CLass"""
     def __init__(self,filename):
-        """"
-        Class initializer
         """
-        #       reading in the data
+        class initializer
+
+        >>> Classifier('input_1.csv')
+        Parameter
+        ---------
+            - filename: the file you're trying to input
+        """
+        self.data = pd.read_csv(filename)
+
         
-        self.input = pd.read_csv(filename)
-        #       splitting data into training and testing
-
-        self.train , self.test = train_test_split(self.input, test_size=0.2, shuffle=False)
-        #       Prior
-        self.prior = self.train['class'].value_counts()
-        self.unique_class = self.train['class'].unique()
-        #       Prior Probability
-        self.prior_prob = self.prior/len(self.train)
-        
-        self.classes = {i:0 for i in self.train['class'].unique()}
-        for c in self.train['class']:
-            self.classes[c] = self.train[  (self.train['class'] == c) ]
-
-
-    def bernoulli_estimator(self,feature):
+    def split_data(self,training_size):
         """
-        Predicts the estimate probability p when x=1 for each class of every 'feature' 
-
-        Parameters:
-            param str feature: the name of column you wish to estimate from 
-        Returns:
-            pr: An estimate of p from this column for each class
+        splitting the input data into training and testing data, normalized to 1
+    
+        Parameter
+        ---------
+            > training_size: number out of 1 where how much of the data should be put as the training data
         """
-        pr = {i:0 for i in self.train['class'].unique()}
-        for i in pr.keys():
-            pr[i] = len(self.train[ (self.train['class'] == i) & (self.train[feature] == 1) ]) / self.prior[i]
-        return pr
+        num_data = int(training_size * len(self.data))
+        num_test = int(1-training_size * len(self.data)) -1
+        self.train = self.data.head(num_data)
+        self.test = self.data.tail(num_test)
 
-    def bernoulli_likelihood(self,p,x):
+        return self.train,self.test
+    
+    def calculate_prior(self):
         """
-        Calculates the likelihood of a certain class: p(x|Ci)
-        Parameters
-        ----------
-        p: dict
-            Dictionary of each estimation of p for each class
+        calculating prior probability of each class on training data
 
         Returns
         -------
-        g: dict
-            Dictionary containing a discriminant function
+            > dictionary of prior probability of each class
+        
+        """
+
+        self.priors = self.train['class'].value_counts()
+        self.prior_prob = self.priors/len(self.train)
+
+        return self.prior_prob
+    
+    def bernoulli_estimator(self, feature):
+        """
+        Estimates the likelihood of x=1 given for each class 
+
+        Returns
+        -------
+            > p: dict of probability estimation that estimates Class i = 1, x =1
+
+        """
+        p = {i:0 for i in self.train['class'].unique()}
+        #       Estimate p
+        for i in p.keys():
+            p[i] = len(self.train[ (self.train['class']== i) & (self.train[feature]==1)]) / self.priors[i]
+
+        return p 
+
+    
+    def bernoulli_likelihood(self,p,x ):
+        """
+        Calculates the likelihood of getting each class with x = 1
+        
+        Parameters
+        ----------
+            > p: dictionary of probability (an estimate)
             
         """
-        g = {i:0 for i in self.train['class'].unique()}
-        for i in g.keys():
-            g[i] = pow( p[i],x)* pow(1-p[i], 1-x)
 
-        return g
-        
-    def discriminant_function(self, likelihood):
+        pXC = {i:0 for i in self.train['class'].unique()}
+        for i in pXC.keys():
+            pXC[i] = pow(p[i], x) * pow(1-p[i], 1-x)
+        return pXC
+    
+    def prediction(self):
         """
-        Calculate the overall discriminant function by multiplying likelihood to prior of each class
-        
-        Parameters
-        ----------
-        likelihood: dictionary 
-            The likelihoods for each class
-
-        Returns
-        -------
-        key: index
-            The key of largest value in dictionary
-        """    
-        g = {i:0 for i in self.unique_class}
-        for i in self.unique_class:
-            g[i] = likelihood[i] * self.prior_prob[i]
-        return(max(g, key= g.get))
-
+        Predicting 
+        """
 
 
         
-        
+
